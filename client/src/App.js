@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Dogs from './components/dogs';
+import { fetchData } from './api';
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  state = {
+    data: []
+  }
+
+  /*componentDidMount() {
+    fetch('http://localhost:8080/apidog')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({ dogs: data })
+    })
+    .catch(console.log)
+  }*/
+
+  async componentDidMount() {
+    const fetchedData = await fetchData();
+    var data = fetchedData.data.data;
+    this.setState({ data });
+  }
+
+  render () {
+    const { data } = this.state;
+    return (
+      <div className="card">
+            <div className="card-body">
+              <Dogs data={data} />
+            </div>
+      </div>
+    );
+  }
 }
 
 export default App;

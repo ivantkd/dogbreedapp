@@ -2,8 +2,13 @@ const express = require('express');
 const apidogRouter = express.Router();
 const apidog = require('../models/apidog.model'); // post model
 
+
 /* Get all Posts */
 apidogRouter.get('/', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); 
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); 
+  res.setHeader('Access-Control-Allow-Credentials', true);
   apidog.find({} , function(err, result){
         if(err){
             res.status(400).send({
